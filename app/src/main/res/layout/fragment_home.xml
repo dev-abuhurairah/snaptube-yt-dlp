@@ -127,290 +127,423 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/home_appbarlayout"
-        android:background="@null"
+        android:background="#0A0A0C"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <!-- Hidden views to preserve YTDLnis Kotlin ViewBinding -->
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/home_toolbar"
             android:layout_width="match_parent"
-            app:title="@string/app_name"
-            app:layout_scrollFlags="scroll|enterAlways"
-            android:layout_height="wrap_content" />
+            android:visibility="gone"
+            android:layout_height="0dp" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_marginVertical="15dp"
-            app:layout_scrollFlags="scroll|enterAlways"
-            android:layout_height="wrap_content">
+            android:visibility="gone"
+            android:layout_height="0dp">
 
             <com.facebook.shimmer.ShimmerFrameLayout
                 android:id="@+id/progress"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:translationZ="250dp"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@+id/search_bar"
-                app:layout_constraintEnd_toEndOf="@+id/search_bar"
-                app:layout_constraintStart_toStartOf="@+id/search_bar"
-                app:layout_constraintTop_toTopOf="@+id/search_bar"
-                app:shimmer_auto_start="true">
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:cardCornerRadius="30dp">
-
-                </com.google.android.material.card.MaterialCardView>
-
-
-            </com.facebook.shimmer.ShimmerFrameLayout>
-
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.search.SearchBar
                 android:id="@+id/search_bar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/search_hint"
-                app:menu="@menu/main_menu" >
-
-            </com.google.android.material.search.SearchBar>
+                app:menu="@menu/main_menu" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!-- dev-abuhurairah Snaptube Watermark Banner -->
+        <!-- 1. Top Tab Bar: Search, YouTube, Music, More (matching screenshot) -->
         <LinearLayout
-            android:id="@+id/snaptube_watermark_banner"
+            android:id="@+id/vidsnap_top_tab_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginBottom="10dp"
+            android:orientation="horizontal"
+            android:paddingHorizontal="24dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="6dp"
             android:gravity="center_vertical"
-            android:background="@drawable/snaptube_badge_bg"
-            android:paddingHorizontal="14dp"
-            android:paddingVertical="7dp"
             app:layout_scrollFlags="scroll|enterAlways">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="⚡"
-                android:textSize="14sp" />
-
-            <TextView
+            <!-- Tab: Search (Active) -->
+            <LinearLayout
+                android:id="@+id/vidsnap_tab_search"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
                 android:layout_weight="1"
-                android:text="Built by dev-abuhurairah • Snaptube UI"
-                android:textColor="@color/snaptube_yellow"
-                android:textSize="12sp"
-                android:textStyle="bold" />
+                android:gravity="center"
+                android:orientation="vertical"
+                android:clickable="true"
+                android:focusable="true">
 
-            <TextView
-                android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Search"
+                    android:textColor="#FFFFFF"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="32dp"
+                    android:layout_height="2.5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="#FFD200" />
+            </LinearLayout>
+
+            <!-- Tab: YouTube -->
+            <LinearLayout
+                android:id="@+id/vidsnap_tab_youtube"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="yt-dlp inside"
-                android:textColor="@color/snaptube_text_secondary"
-                android:textSize="10sp"
-                android:textStyle="italic" />
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="YouTube"
+                    android:textColor="#8E8E93"
+                    android:textSize="17sp" />
+            </LinearLayout>
+
+            <!-- Tab: Music -->
+            <LinearLayout
+                android:id="@+id/vidsnap_tab_music"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Music"
+                    android:textColor="#8E8E93"
+                    android:textSize="17sp" />
+            </LinearLayout>
+
+            <!-- Tab: More -->
+            <LinearLayout
+                android:id="@+id/vidsnap_tab_more"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="More"
+                    android:textColor="#8E8E93"
+                    android:textSize="17sp" />
+            </LinearLayout>
 
         </LinearLayout>
 
-        <!-- Snaptube Social Shortcuts Bar -->
-        <HorizontalScrollView
-            android:id="@+id/snaptube_shortcuts_scrollview"
+        <!-- 2. Hero 3D Tilted Social Tiles + Golden VidSnap Brand Typography -->
+        <RelativeLayout
+            android:id="@+id/vidsnap_hero_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scrollbars="none"
-            android:paddingHorizontal="12dp"
-            android:layout_marginBottom="10dp"
+            android:layout_height="220dp"
+            android:layout_marginTop="16dp"
+            android:clipChildren="false"
             app:layout_scrollFlags="scroll|enterAlways">
 
+            <!-- Tilted Floating Social Tiles in Background -->
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:rotation="-10"
+                android:alpha="0.85"
+                android:scaleX="1.15"
+                android:scaleY="1.15">
 
-                <!-- YouTube Shortcut -->
+                <!-- Row 1 of tiles -->
                 <LinearLayout
-                    android:id="@+id/shortcut_youtube"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="4dp"
-                    android:background="@drawable/snaptube_shortcut_bg"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="8dp">
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="14dp">
 
-                    <ImageView
-                        android:layout_width="26dp"
-                        android:layout_height="26dp"
-                        android:src="@drawable/ic_platform_youtube" />
+                    <FrameLayout
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:layout_marginHorizontal="7dp"
+                        android:background="@drawable/vidsnap_social_tile_fb">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="f"
+                            android:layout_gravity="center"
+                            android:textColor="#FFFFFF"
+                            android:textSize="26sp"
+                            android:textStyle="bold" />
+                    </FrameLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text="YouTube"
-                        android:textColor="@color/snaptube_text_primary"
-                        android:textSize="11sp"
-                        android:textStyle="bold" />
+                    <FrameLayout
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:layout_marginHorizontal="7dp"
+                        android:background="@drawable/vidsnap_social_tile_wa">
+                        <ImageView
+                            android:layout_width="26dp"
+                            android:layout_height="26dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_platform_facebook"
+                            app:tint="#FFFFFF" />
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:layout_marginHorizontal="7dp"
+                        android:background="@drawable/vidsnap_social_tile_ig">
+                        <ImageView
+                            android:layout_width="26dp"
+                            android:layout_height="26dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_platform_instagram"
+                            app:tint="#FFFFFF" />
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:layout_marginHorizontal="7dp"
+                        android:background="@drawable/vidsnap_social_tile_fb">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="f"
+                            android:layout_gravity="center"
+                            android:textColor="#FFFFFF"
+                            android:textSize="26sp"
+                            android:textStyle="bold" />
+                    </FrameLayout>
+
                 </LinearLayout>
 
-                <!-- Instagram Shortcut -->
+                <!-- Row 2 of tiles -->
                 <LinearLayout
-                    android:id="@+id/shortcut_instagram"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="4dp"
-                    android:background="@drawable/snaptube_shortcut_bg"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="8dp">
+                    android:orientation="horizontal">
 
-                    <ImageView
-                        android:layout_width="26dp"
-                        android:layout_height="26dp"
-                        android:src="@drawable/ic_platform_instagram" />
+                    <FrameLayout
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:layout_marginHorizontal="7dp"
+                        android:background="@drawable/vidsnap_social_tile_yt">
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_play_circle"
+                            app:tint="#FFFFFF" />
+                    </FrameLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text="Instagram"
-                        android:textColor="@color/snaptube_text_primary"
-                        android:textSize="11sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
+                    <FrameLayout
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:layout_marginHorizontal="7dp"
+                        android:background="@drawable/vidsnap_social_tile_ig">
+                        <ImageView
+                            android:layout_width="26dp"
+                            android:layout_height="26dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_platform_instagram"
+                            app:tint="#FFFFFF" />
+                    </FrameLayout>
 
-                <!-- Facebook Shortcut -->
-                <LinearLayout
-                    android:id="@+id/shortcut_facebook"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="4dp"
-                    android:background="@drawable/snaptube_shortcut_bg"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="8dp">
+                    <FrameLayout
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:layout_marginHorizontal="7dp"
+                        android:background="@drawable/vidsnap_social_tile_yt">
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_play_circle"
+                            app:tint="#FFFFFF" />
+                    </FrameLayout>
 
-                    <ImageView
-                        android:layout_width="26dp"
-                        android:layout_height="26dp"
-                        android:src="@drawable/ic_platform_facebook" />
+                    <FrameLayout
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:layout_marginHorizontal="7dp"
+                        android:background="@drawable/vidsnap_social_tile_share">
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_platform_pinterest"
+                            app:tint="#FFFFFF" />
+                    </FrameLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text="Facebook"
-                        android:textColor="@color/snaptube_text_primary"
-                        android:textSize="11sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <!-- TikTok Shortcut -->
-                <LinearLayout
-                    android:id="@+id/shortcut_tiktok"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="4dp"
-                    android:background="@drawable/snaptube_shortcut_bg"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="8dp">
-
-                    <ImageView
-                        android:layout_width="26dp"
-                        android:layout_height="26dp"
-                        android:src="@drawable/ic_platform_tiktok" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text="TikTok"
-                        android:textColor="@color/snaptube_text_primary"
-                        android:textSize="11sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <!-- Twitter / X Shortcut -->
-                <LinearLayout
-                    android:id="@+id/shortcut_twitter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="4dp"
-                    android:background="@drawable/snaptube_shortcut_bg"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="8dp">
-
-                    <ImageView
-                        android:layout_width="26dp"
-                        android:layout_height="26dp"
-                        android:src="@drawable/ic_platform_twitter" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text="Twitter/X"
-                        android:textColor="@color/snaptube_text_primary"
-                        android:textSize="11sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <!-- Pinterest Shortcut -->
-                <LinearLayout
-                    android:id="@+id/shortcut_pinterest"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="4dp"
-                    android:background="@drawable/snaptube_shortcut_bg"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="8dp">
-
-                    <ImageView
-                        android:layout_width="26dp"
-                        android:layout_height="26dp"
-                        android:src="@drawable/ic_platform_pinterest" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text="Pinterest"
-                        android:textColor="@color/snaptube_text_primary"
-                        android:textSize="11sp"
-                        android:textStyle="bold" />
                 </LinearLayout>
 
             </LinearLayout>
 
-        </HorizontalScrollView>
+            <!-- Brand Golden Typography "VidSnap" directly over the tiles -->
+            <TextView
+                android:id="@+id/vidsnap_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="VidSnap"
+                android:textColor="#FFD200"
+                android:textSize="48sp"
+                android:textStyle="bold"
+                android:fontFamily="serif"
+                android:shadowColor="#EE000000"
+                android:shadowDx="0"
+                android:shadowDy="4"
+                android:shadowRadius="14" />
 
+        </RelativeLayout>
+
+        <!-- 3. Search Capsule: Download icon + "Search to download" + Yellow Search button -->
+        <RelativeLayout
+            android:id="@+id/vidsnap_search_capsule"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/vidsnap_search_pill_bg"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_scrollFlags="scroll|enterAlways">
+
+            <!-- Download arrow icon on left -->
+            <ImageView
+                android:id="@+id/vidsnap_search_down_icon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="18dp"
+                android:src="@drawable/ic_down"
+                app:tint="#8E8E93" />
+
+            <!-- Search to download hint text -->
+            <TextView
+                android:id="@+id/vidsnap_search_text_hint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/vidsnap_search_down_icon"
+                android:layout_toStartOf="@+id/vidsnap_search_button_circle"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:text="Search to download"
+                android:textColor="#7E7E86"
+                android:textSize="16sp" />
+
+            <!-- Circular Yellow Search Button on right -->
+            <FrameLayout
+                android:id="@+id/vidsnap_search_button_circle"
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="7dp"
+                android:background="@drawable/vidsnap_search_btn_bg"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_search"
+                    app:tint="#0A0A0C" />
+
+            </FrameLayout>
+
+        </RelativeLayout>
+
+        <!-- 4. Quick Action Button: "📋 Paste Link from Clipboard" -->
+        <LinearLayout
+            android:id="@+id/vidsnap_paste_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="22dp"
+            android:background="@drawable/vidsnap_paste_pill_bg"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingHorizontal="22dp"
+            android:paddingVertical="11dp"
+            app:layout_scrollFlags="scroll|enterAlways">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="📋 Paste Link from Clipboard"
+                android:textColor="#FFD200"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <!-- 5. Developer Attribution / Watermark Pill: "⚡ Built with ❤️ by dev-abuhurairah" -->
+        <LinearLayout
+            android:id="@+id/vidsnap_watermark_pill"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="28dp"
+            android:background="@drawable/vidsnap_watermark_pill_bg"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingHorizontal="18dp"
+            android:paddingVertical="9dp"
+            app:layout_scrollFlags="scroll|enterAlways">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="⚡ Built with ❤️ by "
+                android:textColor="#8E8E93"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="dev-abuhurairah"
+                android:textColor="#FFD200"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <!-- Preserved Filter Chips -->
         <HorizontalScrollView
             android:id="@+id/playlist_selection_chips_scrollview"
             android:layout_width="wrap_content"

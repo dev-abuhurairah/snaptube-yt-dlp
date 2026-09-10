@@ -1,4 +1,4 @@
-﻿name: Build Snaptube APK (dev-abuhurairah)
+name: Build VidSnap Pro APK (dev-abuhurairah)
 
 on:
   push:
@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   build:
-    name: Build Snaptube Edition APK
+    name: Build VidSnap Edition APK
     runs-on: ubuntu-latest
 
     steps:
@@ -38,30 +38,30 @@ jobs:
             keytool -genkey -v -keystore app/release_keystore.jks \
               -alias ytdl -keyalg RSA -keysize 2048 -validity 10000 \
               -storepass android -keypass android \
-              -dname "CN=dev-abuhurairah, OU=SnaptubeEdition, O=Snaptube, L=Islamabad, S=Federal, C=PK"
+              -dname "CN=dev-abuhurairah, OU=VidSnapEdition, O=VidSnap, L=Islamabad, S=Federal, C=PK"
             printf "signingConfig.storeFile=release_keystore.jks\nsigningConfig.storePassword=android\nsigningConfig.keyAlias=ytdl\nsigningConfig.keyPassword=android\n" > keystore.properties
           fi
           chmod +x gradlew
 
-      - name: Build Snaptube GitHub Release APK
+      - name: Build VidSnap GitHub Release APK
         run: ./gradlew assembleGithubRelease --no-daemon --warning-mode all
 
       - name: Upload Universal APK
         uses: actions/upload-artifact@v4
         with:
-          name: Snaptube-Universal-APK
+          name: VidSnap-Universal-APK-dev-abuhurairah
           path: app/build/outputs/apk/github/release/*universal*.apk
           if-no-files-found: warn
 
       - name: Upload ARM64-v8a APK
         uses: actions/upload-artifact@v4
         with:
-          name: Snaptube-arm64-v8a-APK
+          name: VidSnap-arm64-v8a-APK-dev-abuhurairah
           path: app/build/outputs/apk/github/release/*arm64*.apk
           if-no-files-found: warn
 
       - name: Upload All Compiled APKs
         uses: actions/upload-artifact@v4
         with:
-          name: Snaptube-All-APKs
+          name: VidSnap-All-APKs
           path: app/build/outputs/apk/github/release/*.apk

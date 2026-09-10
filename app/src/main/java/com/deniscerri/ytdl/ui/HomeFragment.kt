@@ -176,7 +176,7 @@ class HomeFragment : Fragment(), HomeAdapter.OnItemClickListener, SearchSuggesti
 
         runCatching { materialToolbar!!.title = ThemeUtil.getStyledAppName(requireContext()) }
 
-        // Snaptube Shortcuts click listeners
+        // VidSnap Top Tab Bar Click Listeners (matching screenshot)
         fun openSearchWithPlatform(domain: String) {
             runCatching {
                 searchBar?.setText(domain)
@@ -185,29 +185,57 @@ class HomeFragment : Fragment(), HomeAdapter.OnItemClickListener, SearchSuggesti
             }
         }
 
-        view.findViewById<View>(R.id.shortcut_youtube)?.setOnClickListener {
-            openSearchWithPlatform("https://youtube.com")
+        view.findViewById<View>(R.id.vidsnap_tab_search)?.setOnClickListener {
+            searchView?.show()
         }
-        view.findViewById<View>(R.id.shortcut_instagram)?.setOnClickListener {
-            openSearchWithPlatform("https://instagram.com")
+        view.findViewById<View>(R.id.vidsnap_tab_youtube)?.setOnClickListener {
+            openSearchWithPlatform("https://m.youtube.com")
         }
-        view.findViewById<View>(R.id.shortcut_facebook)?.setOnClickListener {
-            openSearchWithPlatform("https://facebook.com")
+        view.findViewById<View>(R.id.vidsnap_tab_music)?.setOnClickListener {
+            openSearchWithPlatform("https://music.youtube.com")
         }
-        view.findViewById<View>(R.id.shortcut_tiktok)?.setOnClickListener {
-            openSearchWithPlatform("https://tiktok.com")
-        }
-        view.findViewById<View>(R.id.shortcut_twitter)?.setOnClickListener {
-            openSearchWithPlatform("https://x.com")
-        }
-        view.findViewById<View>(R.id.shortcut_pinterest)?.setOnClickListener {
-            openSearchWithPlatform("https://pinterest.com")
+        view.findViewById<View>(R.id.vidsnap_tab_more)?.setOnClickListener {
+            runCatching {
+                requireActivity().findViewById<com.google.android.material.bottomnavigation.BottomNavigationView>(R.id.bottomNavigationView)?.selectedItemId = R.id.moreFragment
+            }
         }
 
-        view.findViewById<View>(R.id.snaptube_watermark_banner)?.setOnClickListener {
+        // VidSnap Search Capsule Click
+        view.findViewById<View>(R.id.vidsnap_search_capsule)?.setOnClickListener {
+            searchView?.show()
+        }
+        view.findViewById<View>(R.id.vidsnap_search_button_circle)?.setOnClickListener {
+            searchView?.show()
+        }
+
+        // VidSnap "📋 Paste Link from Clipboard" Button
+        view.findViewById<View>(R.id.vidsnap_paste_button)?.setOnClickListener {
+            try {
+                val clipboard = requireContext().getSystemService(android.content.Context.CLIPBOARD_SERVICE) as? android.content.ClipboardManager
+                val clipData = clipboard?.primaryClip
+                if (clipData != null && clipData.itemCount > 0) {
+                    val pasted = clipData.getItemAt(0).text?.toString()?.trim().orEmpty()
+                    if (pasted.isNotBlank()) {
+                        android.widget.Toast.makeText(requireContext(), "Pasting: $pasted", android.widget.Toast.LENGTH_SHORT).show()
+                        searchBar?.setText(pasted)
+                        searchView?.setText(pasted)
+                        searchView?.show()
+                    } else {
+                        android.widget.Toast.makeText(requireContext(), "Clipboard is empty", android.widget.Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    android.widget.Toast.makeText(requireContext(), "Clipboard is empty", android.widget.Toast.LENGTH_SHORT).show()
+                }
+            } catch (t: Throwable) {
+                t.printStackTrace()
+            }
+        }
+
+        // VidSnap Watermark Pill: "⚡ Built with ❤️ by dev-abuhurairah"
+        view.findViewById<View>(R.id.vidsnap_watermark_pill)?.setOnClickListener {
             MaterialAlertDialogBuilder(requireContext())
-                .setTitle("⚡ Snaptube UI Edition")
-                .setMessage("Main UI Developer: dev-abuhurairah\n\n• Revamped Snaptube UI: dev-abuhurairah\n• Download Engine: yt-dlp & contributors\n• Original Foundation: deniscerri (YTDL-nis)\n\nPure visual upgrade - core download logic is 100% untouched.")
+                .setTitle("⚡ VidSnap Pro")
+                .setMessage("Main UI Developer: dev-abuhurairah\n\n• Designed & Built by dev-abuhurairah\n• Download Engine: yt-dlp & contributors\n• Original Foundation: deniscerri (YTDL-nis)\n\nPure UI transformation - core download engine is 100% untouched.")
                 .setPositiveButton(R.string.ok, null)
                 .show()
         }

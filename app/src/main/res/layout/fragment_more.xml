@@ -52,7 +52,7 @@
                             android:layout_height="wrap_content"
                             android:background="@drawable/rounded_corner"
                             android:backgroundTint="@color/snaptube_yellow"
-                            android:text="SNAPTUBE UI"
+                            android:text="VIDSNAP PRO"
                             android:textColor="#121212"
                             android:textSize="11sp"
                             android:textStyle="bold"
@@ -75,7 +75,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="Built by dev-abuhurairah"
+                        android:text="Built with ❤️ by dev-abuhurairah"
                         android:textColor="@color/snaptube_text_primary"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -84,7 +84,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="Revamped Snaptube UI Edition • Powered by the iconic yt-dlp library • Original core by deniscerri"
+                        android:text="Revamped VidSnap UI Edition • Powered by the iconic yt-dlp library • Original core by deniscerri"
                         android:textColor="@color/snaptube_text_secondary"
                         android:textSize="12sp" />
 

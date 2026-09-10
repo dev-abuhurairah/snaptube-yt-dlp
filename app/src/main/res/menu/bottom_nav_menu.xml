@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" android:theme="@style/BaseTheme">
 
-    <item android:title="@string/home"
-        android:icon="@drawable/ic_home"
+    <item android:title="@string/download"
+        android:icon="@drawable/ic_down"
         android:id="@+id/homeFragment"/>
 
-    <item android:title="@string/downloads"
-        android:icon="@drawable/ic_downloads"
+    <item android:title=""
+        android:icon="@drawable/ic_play_circle"
         android:id="@+id/historyFragment"/>
 
-    <item android:title="@string/more"
-        android:icon="@drawable/ic_more"
+    <item android:title=""
+        android:icon="@drawable/ic_settings"
         android:id="@+id/moreFragment"/>
 
     <item android:title="@string/queue"
         android:icon="@drawable/baseline_downloading_24"
-        android:visible="true"
+        android:visible="false"
         android:id="@+id/downloadQueueMainFragment"/>
 
     <item android:title="@string/terminal"
