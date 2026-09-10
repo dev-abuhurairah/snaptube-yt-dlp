@@ -28,22 +28,38 @@ android {
     namespace 'com.deniscerri.ytdl'
     compileSdk = 36
 
+    signingConfigs {
+        debug {
+            def sFile = properties["signingConfig.storeFile"] ?: "release_keystore.jks"
+            storeFile rootProject.file(sFile)
+            storePassword properties["signingConfig.storePassword"] ?: "android"
+            keyAlias properties["signingConfig.keyAlias"] ?: "ytdl"
+            keyPassword properties["signingConfig.keyPassword"] ?: "android"
+        }
+        release {
+            def sFile = properties["signingConfig.storeFile"] ?: "release_keystore.jks"
+            storeFile rootProject.file(sFile)
+            storePassword properties["signingConfig.storePassword"] ?: "android"
+            keyAlias properties["signingConfig.keyAlias"] ?: "ytdl"
+            keyPassword properties["signingConfig.keyPassword"] ?: "android"
+        }
+    }
+
     try {
         def propertiesFile = rootProject.file("keystore.properties")
-        if(propertiesFile.text != ""){
+        if (propertiesFile.exists() && propertiesFile.text != "") {
             properties.load(new FileInputStream(propertiesFile))
+            signingConfigs.debug.storeFile = rootProject.file(properties["signingConfig.storeFile"])
+            signingConfigs.debug.storePassword = properties["signingConfig.storePassword"]
+            signingConfigs.debug.keyAlias = properties["signingConfig.keyAlias"]
+            signingConfigs.debug.keyPassword = properties["signingConfig.keyPassword"]
 
-            properties.load(new FileInputStream(propertiesFile))
-            signingConfigs {
-                debug {
-                    storeFile file(properties["signingConfig.storeFile"])
-                    storePassword properties["signingConfig.storePassword"]
-                    keyAlias properties["signingConfig.keyAlias"]
-                    keyPassword properties["signingConfig.keyPassword"]
-                }
-            }
+            signingConfigs.release.storeFile = rootProject.file(properties["signingConfig.storeFile"])
+            signingConfigs.release.storePassword = properties["signingConfig.storePassword"]
+            signingConfigs.release.keyAlias = properties["signingConfig.keyAlias"]
+            signingConfigs.release.keyPassword = properties["signingConfig.keyPassword"]
         }
-    }catch(IOException ignored){}
+    } catch(Exception ignored) {}
     defaultConfig {
         applicationId "com.devabuhurairah.vidsnap"
         minSdk 24
@@ -74,7 +90,7 @@ android {
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             debuggable false
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
         }
 
         debug {
