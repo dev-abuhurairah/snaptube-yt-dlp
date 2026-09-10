@@ -9,6 +9,13 @@ plugins {
 }
 
 def properties = new Properties()
+try {
+    def propertiesFile = rootProject.file("keystore.properties")
+    if (propertiesFile.exists()) {
+        properties.load(new FileInputStream(propertiesFile))
+    }
+} catch (Exception ignored) {}
+
 def versionMajor = 1
 def versionMinor = 9
 def versionPatch = 0
@@ -30,36 +37,28 @@ android {
 
     signingConfigs {
         debug {
-            def sFile = properties["signingConfig.storeFile"] ?: "release_keystore.jks"
-            storeFile rootProject.file(sFile)
-            storePassword properties["signingConfig.storePassword"] ?: "android"
-            keyAlias properties["signingConfig.keyAlias"] ?: "ytdl"
-            keyPassword properties["signingConfig.keyPassword"] ?: "android"
+            def storePath = properties.getProperty("signingConfig.storeFile", "release_keystore.jks")
+            def storeF = file(storePath)
+            if (!storeF.exists()) {
+                storeF = rootProject.file(storePath)
+            }
+            storeFile storeF
+            storePassword properties.getProperty("signingConfig.storePassword", "android")
+            keyAlias properties.getProperty("signingConfig.keyAlias", "ytdl")
+            keyPassword properties.getProperty("signingConfig.keyPassword", "android")
         }
         release {
-            def sFile = properties["signingConfig.storeFile"] ?: "release_keystore.jks"
-            storeFile rootProject.file(sFile)
-            storePassword properties["signingConfig.storePassword"] ?: "android"
-            keyAlias properties["signingConfig.keyAlias"] ?: "ytdl"
-            keyPassword properties["signingConfig.keyPassword"] ?: "android"
+            def storePath = properties.getProperty("signingConfig.storeFile", "release_keystore.jks")
+            def storeF = file(storePath)
+            if (!storeF.exists()) {
+                storeF = rootProject.file(storePath)
+            }
+            storeFile storeF
+            storePassword properties.getProperty("signingConfig.storePassword", "android")
+            keyAlias properties.getProperty("signingConfig.keyAlias", "ytdl")
+            keyPassword properties.getProperty("signingConfig.keyPassword", "android")
         }
     }
-
-    try {
-        def propertiesFile = rootProject.file("keystore.properties")
-        if (propertiesFile.exists() && propertiesFile.text != "") {
-            properties.load(new FileInputStream(propertiesFile))
-            signingConfigs.debug.storeFile = rootProject.file(properties["signingConfig.storeFile"])
-            signingConfigs.debug.storePassword = properties["signingConfig.storePassword"]
-            signingConfigs.debug.keyAlias = properties["signingConfig.keyAlias"]
-            signingConfigs.debug.keyPassword = properties["signingConfig.keyPassword"]
-
-            signingConfigs.release.storeFile = rootProject.file(properties["signingConfig.storeFile"])
-            signingConfigs.release.storePassword = properties["signingConfig.storePassword"]
-            signingConfigs.release.keyAlias = properties["signingConfig.keyAlias"]
-            signingConfigs.release.keyPassword = properties["signingConfig.keyPassword"]
-        }
-    } catch(Exception ignored) {}
     defaultConfig {
         applicationId "com.devabuhurairah.vidsnap"
         minSdk 24
