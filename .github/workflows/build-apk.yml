@@ -29,17 +29,24 @@ jobs:
         run: |
           mkdir -p app
           touch local.properties
+          touch secrets.properties
+          touch app/local.properties
+          touch app/secrets.properties
           if [ -n "${{ secrets.BASE_64_SIGNING_KEY }}" ]; then
             echo "Using repository secret key"
-            echo "${{ secrets.BASE_64_SIGNING_KEY }}" | base64 -d > app/release_keystore.jks
+            echo "${{ secrets.BASE_64_SIGNING_KEY }}" | base64 -d > release_keystore.jks
+            cp release_keystore.jks app/release_keystore.jks
             echo "${{ secrets.LOCAL_PROPERTIES }}" > keystore.properties
+            cp keystore.properties app/keystore.properties
           else
             echo "Generating self-signed release keystore"
-            keytool -genkey -v -keystore app/release_keystore.jks \
+            keytool -genkey -v -keystore release_keystore.jks \
               -alias ytdl -keyalg RSA -keysize 2048 -validity 10000 \
               -storepass android -keypass android \
               -dname "CN=dev-abuhurairah, OU=VidSnapEdition, O=VidSnap, L=Islamabad, S=Federal, C=PK"
+            cp release_keystore.jks app/release_keystore.jks
             printf "signingConfig.storeFile=release_keystore.jks\nsigningConfig.storePassword=android\nsigningConfig.keyAlias=ytdl\nsigningConfig.keyPassword=android\n" > keystore.properties
+            cp keystore.properties app/keystore.properties
           fi
           chmod +x gradlew
 
@@ -63,5 +70,5 @@ jobs:
       - name: Upload All Compiled APKs
         uses: actions/upload-artifact@v4
         with:
-          name: VidSnap-All-APKs
-          path: app/build/outputs/apk/github/release/*.apk
+          name: VidSnap-All-Release-APKs
+          path: app/build/outputs/apk/github/release/
