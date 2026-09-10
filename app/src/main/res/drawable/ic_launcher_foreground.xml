@@ -14,6 +14,6 @@
 
     <!-- Bottom Accent Pill -->
     <path
-        android:pathData="M42,76 L66,76 A4,4 0,0,1 70,80 A4,4 0,0,1 66,84 L42,84 A4,4 0,0,1 38,80 A4,4 0,0,1 42,76 Z"
+        android:pathData="M42,76 L66,76 C68.2,76 70,77.8 70,80 C70,82.2 68.2,84 66,84 L42,84 C39.8,84 38,82.2 38,80 C38,77.8 39.8,76 42,76 Z"
         android:fillColor="#FFD200"/>
 </vector>

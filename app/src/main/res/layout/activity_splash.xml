@@ -61,7 +61,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Built with ❤️ by "
+            android:text="Built with love by "
             android:textColor="#8E8E93"
             android:textSize="13sp" />
 
