@@ -57,6 +57,18 @@ class WebViewActivity : BaseActivity() {
             toolbar = appbar.findViewById(R.id.webviewToolbar)
             generateBtn = toolbar.findViewById(R.id.generate)
 
+            val progressIndicator = appbar.findViewById<com.google.android.material.progressindicator.LinearProgressIndicator>(R.id.webview_progress_indicator)
+            val downloadFab = findViewById<View>(R.id.vidsnap_web_download_fab)
+
+            downloadFab?.setOnClickListener {
+                val currentUrl = webView?.url ?: url
+                Toast.makeText(this@WebViewActivity, "Downloading link...", Toast.LENGTH_SHORT).show()
+                val shareIntent = Intent(this@WebViewActivity, com.deniscerri.ytdl.receiver.ShareActivity::class.java)
+                shareIntent.action = Intent.ACTION_SEND
+                shareIntent.putExtra(Intent.EXTRA_TEXT, currentUrl)
+                startActivity(shareIntent)
+            }
+
             if (!url.isYoutubeURL()) {
                 toolbar.menu.children.firstOrNull { it.itemId == R.id.get_data_sync_id }?.isVisible = false
             }
@@ -163,8 +175,10 @@ class WebViewActivity : BaseActivity() {
                     override fun onPageFinished(view: WebView?, url: String?) {
                         webView = view
                         super.onPageFinished(view, url)
+                        progressIndicator?.visibility = View.GONE
                         runCatching {
                             toolbar.title = view?.title ?: ""
+                            toolbar.subtitle = view?.url ?: ""
                             cookies = cookieManager.getCookie(view?.url)
                         }
 
@@ -187,7 +201,17 @@ class WebViewActivity : BaseActivity() {
                         return super.shouldOverrideUrlLoading(view, request)
                     }
                 }
-                this.webChromeClient = object : WebChromeClient() {}
+                this.webChromeClient = object : WebChromeClient() {
+                    override fun onProgressChanged(view: WebView?, newProgress: Int) {
+                        super.onProgressChanged(view, newProgress)
+                        if (newProgress < 100) {
+                            progressIndicator?.visibility = View.VISIBLE
+                            progressIndicator?.progress = newProgress
+                        } else {
+                            progressIndicator?.visibility = View.GONE
+                        }
+                    }
+                }
             }
         }
 

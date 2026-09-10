@@ -662,11 +662,11 @@ object Extensions {
     }
 
     fun String.extractURL() : String {
-        val res =
-            Pattern.compile("(http|ftp|https)://([\\w_-]+(?:\\.[\\w_-]+)+)([\\w.,@?^=%&:/~+#-]*[\\w@?^=%&/~+#-])")
-                .matcher(this)
-        return if (res.find()) {
-            res.group()
+        val pattern = Pattern.compile("https?://[^\\s<>\"'\\(\\)]+", Pattern.CASE_INSENSITIVE)
+        val matcher = pattern.matcher(this)
+        return if (matcher.find()) {
+            var url = matcher.group() ?: this
+            url.trim().trimEnd('.', ',', ';', '!', '?', ')', ']', '}')
         } else {
             this
         }

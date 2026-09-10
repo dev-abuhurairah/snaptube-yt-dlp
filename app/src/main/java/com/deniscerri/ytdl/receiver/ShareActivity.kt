@@ -159,7 +159,24 @@ class ShareActivity : BaseActivity() {
         val action = intent.action
         Log.e("aa", intent.toString())
         if (Intent.ACTION_SEND == action || Intent.ACTION_VIEW == action) {
-            if (intent.getStringExtra(Intent.EXTRA_TEXT) == null && Intent.ACTION_SEND == action){
+            val rawData = when(action) {
+                Intent.ACTION_SEND -> {
+                    var text = intent.getStringExtra(Intent.EXTRA_TEXT)
+                    if (text.isNullOrBlank()) {
+                        text = intent.getCharSequenceExtra(Intent.EXTRA_TEXT)?.toString()
+                    }
+                    if (text.isNullOrBlank() && intent.clipData != null && intent.clipData!!.itemCount > 0) {
+                        text = intent.clipData!!.getItemAt(0).text?.toString() ?: intent.clipData!!.getItemAt(0).uri?.toString()
+                    }
+                    if (text.isNullOrBlank()) {
+                        text = intent.getStringExtra(Intent.EXTRA_SUBJECT)
+                    }
+                    text ?: intent.dataString
+                }
+                else -> intent.dataString ?: intent.data?.toString()
+            }
+
+            if (rawData.isNullOrBlank()) {
                 intent.setClass(this, MainActivity::class.java)
                 startActivity(intent)
                 finishAffinity()
@@ -169,12 +186,13 @@ class ShareActivity : BaseActivity() {
             runCatching { supportFragmentManager.popBackStack() }
 
             quickDownload = intent.getBooleanExtra("quick_download", sharedPreferences.getBoolean("quick_download", false) || sharedPreferences.getString("preferred_download_type", "video") == "command")
-            val data = when(action){
-                Intent.ACTION_SEND -> intent.getStringExtra(Intent.EXTRA_TEXT)!!
-                else -> intent.dataString!!
+            val inputQuery = rawData.extractURL()
+            if (inputQuery.isBlank()) {
+                intent.setClass(this, MainActivity::class.java)
+                startActivity(intent)
+                finishAffinity()
+                return
             }
-
-            val inputQuery = data.extractURL()
             val ai = packageManager.getActivityInfo(componentName, PackageManager.GET_META_DATA)
 
             val type = intent.getStringExtra("TYPE")

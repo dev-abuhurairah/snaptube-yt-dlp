@@ -1,0 +1,23 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="120dp"
+    android:viewportWidth="120"
+    android:viewportHeight="120">
+
+    <!-- Outer Rounded Square Shield -->
+    <path
+        android:pathData="M24,12 L96,12 A12,12 0,0,1 108,24 L108,96 A12,12 0,0,1 96,108 L24,108 A12,12 0,0,1 12,96 L12,24 A12,12 0,0,1 24,12 Z"
+        android:fillColor="#18181C"
+        android:strokeColor="#FFD200"
+        android:strokeWidth="3"/>
+
+    <!-- Sharp Snaptube Golden Chevron "V" Arrow -->
+    <path
+        android:pathData="M34,40 L60,78 L86,40 L72,40 L60,58 L48,40 Z"
+        android:fillColor="#FFD200"/>
+
+    <!-- Inner Highlight -->
+    <path
+        android:pathData="M60,78 L86,40 L72,40 L60,58 Z"
+        android:fillColor="#FFBA00"/>
+</vector>

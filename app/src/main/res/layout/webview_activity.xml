@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#0A0A0C">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/webview_appbarlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:elevation="0dp"
-        android:fitsSystemWindows="true"
-        app:elevation="0dp"
+        android:background="#121216"
+        android:elevation="4dp"
+        app:elevation="4dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:liftOnScroll="false">
@@ -22,30 +21,37 @@
             android:id="@+id/webviewToolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:layout_scrollFlags="scroll"
+            app:titleTextColor="#FFFFFF"
+            app:subtitleTextColor="#8E8E93"
             app:menu="@menu/webview_menu"
             app:navigationContentDescription="@string/back"
             app:navigationIcon="?attr/homeAsUpIndicator">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/generate"
                 style="@style/Widget.Material3.Button.ElevatedButton.Icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginHorizontal="10dp"
-                android:autoLink="all"
+                android:backgroundTint="#FFD200"
+                android:textColor="#121212"
+                app:iconTint="#121212"
                 android:text="@string/ok"
                 app:icon="@drawable/ic_check"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="PrivateResource" />
 
         </com.google.android.material.appbar.MaterialToolbar>
 
-    </com.google.android.material.appbar.AppBarLayout>
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/webview_progress_indicator"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:visibility="gone"
+            app:trackColor="#1E1E24"
+            app:indicatorColor="#FFD200" />
 
+    </com.google.android.material.appbar.AppBarLayout>
 
     <WebView
         android:id="@+id/webview"
@@ -54,9 +60,24 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/webview_appbarlayout"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/webview_appbarlayout" />
 
+    <!-- Snaptube Floating Download Action Button -->
+    <com.google.android.material.extendedfloatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/vidsnap_web_download_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="Download"
+        android:textColor="#121212"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:backgroundTint="#FFD200"
+        app:icon="@drawable/ic_down"
+        app:iconTint="#121212"
+        app:cornerRadius="28dp"
+        app:elevation="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-

@@ -189,10 +189,16 @@ class HomeFragment : Fragment(), HomeAdapter.OnItemClickListener, SearchSuggesti
             searchView?.show()
         }
         view.findViewById<View>(R.id.vidsnap_tab_youtube)?.setOnClickListener {
-            openSearchWithPlatform("https://m.youtube.com")
+            val intent = Intent(requireContext(), WebViewActivity::class.java)
+            intent.putExtra("url", "https://m.youtube.com")
+            intent.putExtra("description", "YouTube")
+            startActivity(intent)
         }
         view.findViewById<View>(R.id.vidsnap_tab_music)?.setOnClickListener {
-            openSearchWithPlatform("https://music.youtube.com")
+            val intent = Intent(requireContext(), WebViewActivity::class.java)
+            intent.putExtra("url", "https://music.youtube.com")
+            intent.putExtra("description", "YouTube Music")
+            startActivity(intent)
         }
         view.findViewById<View>(R.id.vidsnap_tab_more)?.setOnClickListener {
             runCatching {
