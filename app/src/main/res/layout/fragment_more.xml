@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top"
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints">
+
+            <ImageView
+                android:id="@+id/app_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/ic_app_icon"
+                android:scaleType="center" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="12dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:strokeWidth="1.5dp"
+                app:strokeColor="@color/snaptube_yellow"
+                app:cardBackgroundColor="@color/snaptube_card_dark">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_corner"
+                            android:backgroundTint="@color/snaptube_yellow"
+                            android:text="SNAPTUBE UI"
+                            android:textColor="#121212"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:paddingHorizontal="8dp"
+                            android:paddingVertical="3dp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text="yt-dlp Engine"
+                            android:textColor="@color/snaptube_yellow"
+                            android:textSize="11sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Built by dev-abuhurairah"
+                        android:textColor="@color/snaptube_text_primary"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Revamped Snaptube UI Edition • Powered by the iconic yt-dlp library • Original core by deniscerri"
+                        android:textColor="@color/snaptube_text_secondary"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/terminal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/terminal"
+                android:textStyle="bold"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:paddingHorizontal="15dp"
+                android:paddingVertical="15dp"
+                android:drawablePadding="35dp"
+                android:textSize="16sp"
+                app:drawableStartCompat="@drawable/ic_terminal" />
+
+            <TextView
+                android:id="@+id/logs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/logs"
+                android:textStyle="bold"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:paddingHorizontal="15dp"
+                android:paddingVertical="15dp"
+                android:drawablePadding="35dp"
+                android:textSize="16sp"
+                app:drawableStartCompat="@drawable/ic_baseline_file_open_24" />
+
+
+            <TextView
+                android:id="@+id/command_templates"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="35dp"
+                android:textSize="16sp"
+                android:paddingVertical="15dp"
+                android:text="@string/command_templates"
+                android:textStyle="bold"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:paddingHorizontal="15dp"
+                app:drawableStartCompat="@drawable/ic_baseline_keyboard_arrow_right_24" />
+
+            <TextView
+                android:id="@+id/downloads"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="35dp"
+                android:textSize="16sp"
+                android:paddingVertical="15dp"
+                android:text="@string/downloads"
+                android:textStyle="bold"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:paddingHorizontal="15dp"
+                app:drawableTint="?android:colorAccent"
+                app:drawableStartCompat="@drawable/ic_downloads" />
+
+            <TextView
+                android:id="@+id/download_queue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="35dp"
+                android:textSize="16sp"
+                android:paddingVertical="15dp"
+                android:text="@string/download_queue"
+                android:textStyle="bold"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:paddingHorizontal="15dp"
+                app:drawableTint="?android:colorAccent"
+                app:drawableStartCompat="@drawable/baseline_downloading_24" />
+
+            <TextView
+                android:id="@+id/cookies"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="35dp"
+                android:textSize="16sp"
+                android:paddingVertical="15dp"
+                android:text="@string/cookies"
+                android:textStyle="bold"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:paddingHorizontal="15dp"
+                app:drawableStartCompat="@drawable/baseline_cookie_24" />
+
+            <TextView
+                android:id="@+id/observe_sources"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="35dp"
+                android:textSize="16sp"
+                android:paddingVertical="15dp"
+                android:text="@string/observe_sources"
+                android:textStyle="bold"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:paddingHorizontal="15dp"
+                app:drawableStartCompat="@drawable/baseline_calendar_month_24" />
+
+            <TextView
+                android:id="@+id/terminate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="35dp"
+                android:textSize="16sp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:paddingVertical="15dp"
+                android:text="@string/kill_app"
+                android:textStyle="bold"
+                android:paddingHorizontal="15dp"
+                app:drawableStartCompat="@drawable/ic_power" />
+
+
+            <View
+                android:layout_margin="0dp"
+                style="@style/Divider.Horizontal" />
+
+            <TextView
+                android:id="@+id/settings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="35dp"
+                android:textSize="16sp"
+                android:paddingVertical="15dp"
+                android:text="@string/settings"
+                android:textStyle="bold"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:paddingHorizontal="15dp"
+                app:drawableStartCompat="@drawable/ic_settings" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</RelativeLayout>

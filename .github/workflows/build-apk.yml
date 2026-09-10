@@ -1,0 +1,77 @@
+﻿name: Build Snaptube APK (dev-abuhurairah)
+
+on:
+  push:
+    branches:
+      - "**"
+    tags-ignore:
+      - "**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build Snaptube Edition APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: 'corretto'
+          cache: 'gradle'
+
+      - name: Setup Keystore & Signing Environment
+        run: |
+          mkdir -p app
+          touch local.properties
+
+          # If repository secrets exist, use them; otherwise auto-generate a valid build keystore
+          if [ -n "${{ secrets.BASE_64_SIGNING_KEY }}" ]; then
+            echo "Using repository signing secret"
+            echo "${{ secrets.BASE_64_SIGNING_KEY }}" | base64 -d > app/release_keystore.jks
+            echo "${{ secrets.LOCAL_PROPERTIES }}" > keystore.properties
+          else
+            echo "Auto-generating self-signed build keystore for 1-click cloud compile"
+            keytool -genkey -v -keystore app/release_keystore.jks \
+              -alias ytdl -keyalg RSA -keysize 2048 -validity 10000 \
+              -storepass android -keypass android \
+              -dname "CN=dev-abuhurairah, OU=SnaptubeEdition, O=Snaptube, L=Islamabad, S=Federal, C=PK"
+            
+            cat << 'EOF' > keystore.properties
+signingConfig.storeFile=release_keystore.jks
+signingConfig.storePassword=android
+signingConfig.keyAlias=ytdl
+signingConfig.keyPassword=android
+EOF
+          fi
+          chmod +x gradlew
+
+      - name: Build Snaptube GitHub Release APK
+        run: ./gradlew assembleGithubRelease --no-daemon --warning-mode all
+
+      - name: Upload Universal APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Snaptube-YTDLnis-Universal-dev-abuhurairah
+          path: app/build/outputs/apk/github/release/*universal*.apk
+          if-no-files-found: warn
+
+      - name: Upload ARM64-v8a APK (Recommended for Modern Phones)
+        uses: actions/upload-artifact@v4
+        with:
+          name: Snaptube-YTDLnis-arm64-v8a-dev-abuhurairah
+          path: app/build/outputs/apk/github/release/*arm64*.apk
+          if-no-files-found: warn
+
+      - name: Upload All Compiled APKs
+        uses: actions/upload-artifact@v4
+        with:
+          name: Snaptube-YTDLnis-All-APKs
+          path: app/build/outputs/apk/github/release/*.apk
