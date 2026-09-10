@@ -42,7 +42,9 @@ android {
             if (!storeF.exists()) {
                 storeF = rootProject.file(storePath)
             }
-            storeFile storeF
+            if (storeF.exists()) {
+                storeFile storeF
+            }
             storePassword properties.getProperty("signingConfig.storePassword", "android")
             keyAlias properties.getProperty("signingConfig.keyAlias", "ytdl")
             keyPassword properties.getProperty("signingConfig.keyPassword", "android")
@@ -53,7 +55,9 @@ android {
             if (!storeF.exists()) {
                 storeF = rootProject.file(storePath)
             }
-            storeFile storeF
+            if (storeF.exists()) {
+                storeFile storeF
+            }
             storePassword properties.getProperty("signingConfig.storePassword", "android")
             keyAlias properties.getProperty("signingConfig.keyAlias", "ytdl")
             keyPassword properties.getProperty("signingConfig.keyPassword", "android")
@@ -89,7 +93,11 @@ android {
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             debuggable false
-            signingConfig signingConfigs.release
+            if (signingConfigs.release.storeFile != null && signingConfigs.release.storeFile.exists()) {
+                signingConfig signingConfigs.release
+            } else {
+                signingConfig signingConfigs.debug
+            }
         }
 
         debug {
